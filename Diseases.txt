@@ -1,0 +1,3 @@
+"Bardet Biedl Syndrome"	"BBS"
+"Breast Cancer"	"BRCA"
+"Familial Hypercholestreamia"	"FH"

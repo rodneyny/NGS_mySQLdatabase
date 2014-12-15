@@ -1,0 +1,6 @@
+"Class 1"	"Clearly not pathogenic"
+"Class 2"	"Unlikely to be pathogenic"
+"Class 3"	"Unknown significance"
+"Class 4"	"Likely to be pathogenic"
+"Class 5"	"Clearly pathogenic"
+"Not classified"	"Variant has not yet been classified"
