@@ -89,7 +89,7 @@ cursor.execute("""create table Variants (Refseq VARCHAR(20),
 		  Primary key (cDNA)
 		  )""")
 		  
-cursor.execute(""" create table Occurrence (EpisodeNumber CHAR(10),
+cursor.execute(""" create table Occurrence (EpisodeNumber CHAR(15),
 		cDNA VARCHAR(255), 
 		Comments TEXT, 
 		Genotype CHAR(4)
@@ -111,7 +111,7 @@ cursor.execute("""create table Diseases (Disease VARCHAR(255),
 		Primary key (Code)
 		)""")
 		
-cursor.execute(""" create table Episodes (EpisodeNumber CHAR(10), 
+cursor.execute(""" create table Episodes (EpisodeNumber CHAR(15), 
 		Phenotype TEXT,
 		Worksheet VARCHAR(50),
 		Assay VARCHAR(255),
