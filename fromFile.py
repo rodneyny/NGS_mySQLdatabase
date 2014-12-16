@@ -28,13 +28,26 @@ if __name__ == "__main__":
 	cursor = db.cursor()
 
 	# Prepare SQL query to INSERT a record into the database.
+	
+	try:
+		for line in diseases:
+			disease = line[0]
+			code = line[1]
+			cursor.execute("insert into Diseases(Disease,DiseaseCode)\
+			 values ('%s','%s')" % \
+			 (disease, code))
+			db.commit()
+		print "Rows in the Diseases table were populated"
+	except:
+		print "No diseases were added to the Diseases table"
+		db.rollback()
 
 	try:
 		for line in genes:
 			gene = line[0]
 			chr = line[1]
 			dis = line[2]
-			sql = "insert into Genes(Gene, Chromosome,Disease)\
+			sql = "insert into Genes(Gene, Chromosome,DiseaseCode)\
 			 values ('%s', '%s', '%s')" % \
 			 (gene, chr, dis)
 		   # Execute the SQL command
@@ -61,18 +74,6 @@ if __name__ == "__main__":
 		print "An error occurred inserting Classes"
 		db.rollback()
 		
-	try:
-		for line in diseases:
-			disease = line[0]
-			code = line[1]
-			cursor.execute("insert into Diseases(Disease,code)\
-			 values ('%s','%s')" % \
-			 (disease, code))
-			db.commit()
-		print "Rows in the Diseases table were populated"
-	except:
-		print "No diseases were added to the Diseases table"
-		db.rollback()
 		
 	try:
 		for line in transcripts:
