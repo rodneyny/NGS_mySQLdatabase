@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import MySQLdb as dbm
 import sys 
 from fromFile import filelist
@@ -11,13 +9,9 @@ record = filelist('vep.txt','record')
 # Remove the header from the dictionary
 record.remove(record[0])
 
-# Open database connection
 db = dbm.connect("localhost","rodney","password","variants" )
 
-# # prepare a cursor object using cursor() method
 cursor = db.cursor()
-
-# Prepare SQL query to INSERT a record into the database.
 
 try:
 	for line in record:
@@ -45,20 +39,19 @@ try:
 			  '%s', '%f', '%s', '%s')"% \
 		      (PK, refseq, hgvsnomen, effect, dbsnp, maf, espaa, \
 			  espea, sift, siftscore, polyphen, polyphenscore, protein, proteindom ))
+		#print "Rows in the Variants table were populated"
+		
 		cursor.execute("insert ignore into Episodes ( EpisodeNumber)\
 					  values ('%s')" % (sample))
+		#print "Rows in the Episodes table were populated"
+		
 		cursor.execute("insert into Occurrence (EpisodeNumber, cDNA, Genotype) \
 					   values ('%s', '%s', '%s')" % (sample, PK, gt))
-	   # Commit your changes in the database 
+		#print "Rows in the Occurrence table were populated" 
 		db.commit()
 	print "records successfully added to database"
 except:
 	print "an error occured"
-	# Rollback in case there is any error
 	db.rollback()
 
-
-
-
-# disconnect from server
 db.close()
