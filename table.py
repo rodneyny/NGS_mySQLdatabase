@@ -9,21 +9,41 @@ db = MySQLdb.connect("localhost","rodney","password","variants" )
 cursor = db.cursor()
 
 # Drop table if it already exist using execute() method.
-cursor.execute("DROP TABLE IF EXISTS Genes")
-cursor.execute("DROP TABLE IF EXISTS Variants")
-cursor.execute("DROP TABLE IF EXISTS Occurrence")
 cursor.execute("DROP TABLE IF EXISTS Classes")
-cursor.execute("DROP TABLE IF EXISTS Transcripts")
-cursor.execute("DROP TABLE IF EXISTS Diseases")
+cursor.execute("DROP TABLE IF EXISTS Occurrence")
 cursor.execute("DROP TABLE IF EXISTS Episodes")
+cursor.execute("DROP TABLE IF EXISTS Variants")
+cursor.execute("DROP TABLE IF EXISTS Transcripts")
+cursor.execute("DROP TABLE IF EXISTS Genes")
+cursor.execute("DROP TABLE IF EXISTS Diseases")
+
 
 # Create table as per requirement
+
+cursor.execute(""" create table Classes (Classification VARCHAR(50),
+		Description VARCHAR(50),
+		Primary key(Classification)
+		)""")
+		
+cursor.execute("""create table Diseases (Disease VARCHAR(255),
+		DiseaseCode VARCHAR(10),
+		Primary key (DiseaseCode)
+		)""")		
+		
 cursor.execute("""create table Genes (
 		Gene VARCHAR(20) NOT NULL,
 		Chromosome VARCHAR(10),
-		Disease VARCHAR(10),
-		primary key(Gene)
-          )""")
+		DiseaseCode VARCHAR(10),
+		Primary key(Gene),
+		Foreign key(DiseaseCode) References Diseases(DiseaseCode)
+		)""")
+		
+cursor.execute(""" create table Transcripts (Refseq VARCHAR(20),
+		Ensembl VARCHAR(20),
+		Gene VARCHAR(20),
+		Primary key (Refseq),
+		Foreign key (Gene) References Genes(Gene)
+		)""")
 		  
 cursor.execute("""create table Variants (Refseq VARCHAR(20), 
 		  GenomicPosition INT,
@@ -60,7 +80,7 @@ cursor.execute("""create table Variants (Refseq VARCHAR(20),
 		  ESP_EA FLOAT,
 		  ESP_ALL FLOAT,
 		  distNearestSS INT, 
-		  nearestSSType CHAR(2), 
+		  nearestSSType CHAR(2),
 		  wtSSFScore FLOAT, 
 		  varSSFScore FLOAT,
 		  wtMaxEntScore FLOAT, 
@@ -86,38 +106,27 @@ cursor.execute("""create table Variants (Refseq VARCHAR(20),
 		  SNPsandGO VARCHAR(255),
 		  Mutpred VARCHAR(255), 
 		  Alias VARCHAR(255) ,
-		  Primary key (cDNA)
+		  Primary key (cDNA),
+		  Foreign key (Refseq) References Transcripts(Refseq)
 		  )""")
 		  
-cursor.execute(""" create table Occurrence (EpisodeNumber CHAR(15),
-		cDNA VARCHAR(255), 
-		Comments TEXT, 
-		Genotype CHAR(4)
-		)""")
-		
-cursor.execute(""" create table Classes (Classification VARCHAR(50),
-		Description VARCHAR(50),
-		Primary key(Classification)
-		)""")
-		
-cursor.execute(""" create table Transcripts (Refseq VARCHAR(20),
-		Ensembl VARCHAR(20),
-		Gene VARCHAR(20),
-		Primary key (Refseq)
-		)""")
-		
-cursor.execute("""create table Diseases (Disease VARCHAR(255),
-		Code VARCHAR(10),
-		Primary key (Code)
-		)""")
-		
 cursor.execute(""" create table Episodes (EpisodeNumber CHAR(15), 
 		Phenotype TEXT,
 		Worksheet VARCHAR(50),
 		Assay VARCHAR(255),
 		Date DATE,
 		Primary key (EpisodeNumber)
-		)""")		
+		)""")
+		  
+cursor.execute(""" create table Occurrence (EpisodeNumber CHAR(15),
+		cDNA VARCHAR(255), 
+		Comments TEXT, 
+		Genotype CHAR(4),
+		Foreign Key(EpisodeNumber) References Episodes(EpisodeNumber),
+		Foreign Key (cDNA) References Variants(cDNA)
+		)""")
+	
+		
 	  
 # disconnect from server
 db.close()
