@@ -25,6 +25,7 @@ INSERT INTO Episodes ( EpisodeNumber )
 SELECT DISTINCT vep_database_input.SAMPLE
 FROM vep_database_input
 WHERE (((vep_database_input.SAMPLE) Not In (select  EpisodeNumber from Episodes)));
+
 INSERT INTO Occurrence ( EpisodeNumber, cDNA, Genotype )
 SELECT vep_database_input.SAMPLE, vep_database_input.[#PK], vep_database_input.GT
 FROM vep_database_input;
