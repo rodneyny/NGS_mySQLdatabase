@@ -47,13 +47,7 @@ for line in record:
 		  
 	db.commit
 
-# cursor.execute("select cDNA, Refseq, \
-		  # HGVSNomen, Effect, dbSNP, MAF, ESP_AA, ESP_EA, SIFT, SIFTweight, \
-		  # Polyphen, PolyphenScore, Protein, ProteinDomain \
-		  # from Variants")
-# results = cursor.fetchall()
-# for row in results:
-	# print row 
+
 
 
 # disconnect from server
