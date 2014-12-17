@@ -10,6 +10,9 @@ def filelist(file, lst):
 	lst = []
 	for row in f:
 		row = row.strip().split('\t')
+		
+		row = [ x.strip('"') for x in row ]
+		
 	#Append each row from the file into the genes list
 		lst.append(row)
 	return lst
