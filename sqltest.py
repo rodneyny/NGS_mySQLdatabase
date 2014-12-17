@@ -2,7 +2,7 @@
 
 import MySQLdb as dbm
 import sys 
-from file import filelist
+from fromFile import filelist
 
 #file = os.path.abspath(sys.argv[1])
 
@@ -43,10 +43,17 @@ for line in record:
 		  (PK, refseq, hgvsnomen, effect, dbsnp, maf,espaa \
 		  , espea, sift, siftscore, polyphen, polyphenscore, \
 	      protein, proteindom))
+	print "row added"
 		  
-
 	db.commit
 
+# cursor.execute("select cDNA, Refseq, \
+		  # HGVSNomen, Effect, dbSNP, MAF, ESP_AA, ESP_EA, SIFT, SIFTweight, \
+		  # Polyphen, PolyphenScore, Protein, ProteinDomain \
+		  # from Variants")
+# results = cursor.fetchall()
+# for row in results:
+	# print row 
 
 
 # disconnect from server
