@@ -9,6 +9,8 @@ db = MySQLdb.connect("localhost","rodney","password","variants" )
 cursor = db.cursor()
 
 # Drop table if it already exist using execute() method.
+# Order of dropping tables has to be the same order as any foreign key
+# constraints starting with the 'child' table
 cursor.execute("DROP TABLE IF EXISTS Classes")
 cursor.execute("DROP TABLE IF EXISTS Occurrence")
 cursor.execute("DROP TABLE IF EXISTS Episodes")
@@ -17,8 +19,9 @@ cursor.execute("DROP TABLE IF EXISTS Transcripts")
 cursor.execute("DROP TABLE IF EXISTS Genes")
 cursor.execute("DROP TABLE IF EXISTS Diseases")
 
-
 # Create table as per requirement
+# When creating a new table which has a relationship with another table
+# the 'parent' table should be created before the 'child' table
 
 cursor.execute(""" create table Classes (Classification VARCHAR(50),
 		Description VARCHAR(50),
@@ -45,7 +48,7 @@ cursor.execute(""" create table Transcripts (Refseq VARCHAR(20),
 		Foreign key (Gene) References Genes(Gene)
 		)""")
 		  
-cursor.execute("""create table Variants (Refseq VARCHAR(20), 
+cursor.execute("""create table Variants (Refseq VARCHAR(20) NOT NULL, 
 		  GenomicPosition INT,
 		  GenomeBuild VARCHAR(20) DEFAULT 'GRCh37/hg19', 
 		  Exon INT, 
@@ -107,7 +110,7 @@ cursor.execute("""create table Variants (Refseq VARCHAR(20),
 		  Mutpred VARCHAR(255), 
 		  Alias VARCHAR(255) ,
 		  Primary key (cDNA),
-		  Foreign key (Refseq) References Transcripts(Refseq)
+		  Foreign key (Refseq) REFERENCES Transcripts(Refseq)
 		  )""")
 		  
 cursor.execute(""" create table Episodes (EpisodeNumber CHAR(15), 
@@ -125,8 +128,6 @@ cursor.execute(""" create table Occurrence (EpisodeNumber CHAR(15),
 		Foreign Key(EpisodeNumber) References Episodes(EpisodeNumber),
 		Foreign Key (cDNA) References Variants(cDNA)
 		)""")
-	
-		
-	  
+		  
 # disconnect from server
 db.close()
