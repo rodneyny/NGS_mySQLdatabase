@@ -18,7 +18,7 @@ try:
 	# Fetch all the rows in a list of lists.
 	results = cursor.fetchall()
 	desc = cursor.description
-	
+
    # Create a header based on the description values of each column
    # Use index [0] from the description
 	header = []
