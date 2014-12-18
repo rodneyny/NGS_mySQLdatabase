@@ -60,7 +60,7 @@ try:
 		db.commit()
 	print "records successfully added to database"
 except:
-	print "an error occured"
+	print "an error occurred inserting samples"
 	db.rollback()
 
 db.close()
