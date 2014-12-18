@@ -1,8 +1,11 @@
 import MySQLdb as dbm
 import csv
 import sys
+ 
+data = sys.argv[1]
+sql = sys.argv[2]
 
-db = dbm.connect("localhost","rodney","password","variants" )
+db = dbm.connect("localhost","rodney","password",data )
 
 cursor = db.cursor()
 
@@ -10,7 +13,7 @@ f = open('variants2.txt','w')
 c = csv.writer(f, delimiter ='\t')
 
 # Take an SQL statement as the first argument.
-sql = sys.argv[1]
+
 
 try:
 	# Execute the SQL command
