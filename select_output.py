@@ -1,9 +1,10 @@
 import MySQLdb as dbm
 import csv
 import sys
+from fromFile import openfile
  
-data = sys.argv[1]
-sql = sys.argv[2]
+data = "VEPvariants" #sys.argv[1]
+sql = openfile(sys.argv[1])
 
 db = dbm.connect("localhost","rodney","password",data )
 
@@ -27,15 +28,13 @@ try:
 	header = []
 	for line in desc:
 		header.append(line[0])
-	print header
-
 	c.writerow(header)
+	
 	for row in results:
 		c.writerow(row)
-		print row
+	print "Finished!"
 
 except:
    print "Error: unable to fetch data"
-   
 
 db.close()
