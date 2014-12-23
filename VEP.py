@@ -2,13 +2,10 @@ import MySQLdb as dbm
 import sys 
 from fromFile import filelist
 
-#file = os.path.abspath(sys.argv[1])
-
 record = filelist('vep.txt','record')
 
 # Remove the header from the dictionary
 record.remove(record[0])
-
 
 db = dbm.connect("localhost","rodney","password","VEPvariants" )
 
@@ -18,8 +15,7 @@ try:
 	for line in record:
 		var = line[0:67]
 		var.remove(var[3])
-		print var
-		print len(var)
+
 		# For floats use the %f placeholder instead of the %d placeholder
 		cursor.executemany("""insert ignore into Variants (cDNA, 
 					Refseq, HGVSNomen, GT, GQ, SDP, DP, RD,
@@ -61,6 +57,27 @@ try:
 	print "records successfully added to database"
 except:
 	print "an error occurred inserting samples"
+	db.rollback()
+	
+# Add the number of times a variant has been seen previously in the lab	
+try:
+	cursor.execute("select cDNA ,count(SampleNumber)as EpisodeCount \
+					from Occurrence \
+					group by cDNA")	
+					
+	samcount = cursor.fetchall()
+
+	for line in samcount:
+		cdna = line[0]
+		count = line[1]
+		
+		cursor.execute("Update Variants set Frequency \
+						= %s \
+						where cDNA = %s" ,(count,cdna))
+		db.commit()
+	print "Frequency updated"	
+except:
+	print " The frequency was not updated"
 	db.rollback()
 
 db.close()
