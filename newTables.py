@@ -120,6 +120,7 @@ cursor.execute("""create table Variants (cDNA VARCHAR(255) NOT NULL,
 				HGVS_protein VARCHAR(255),	
 				HGVSp VARCHAR(255),	
 				Classification VARCHAR(50) DEFAULT 'Not classified' NOT NULL,
+				Frequency INT,
 				Primary key (cDNA),
 				Foreign key (Refseq) REFERENCES Transcripts(Refseq)
 				)""")
@@ -138,6 +139,7 @@ cursor.execute(""" create table Occurrence (SampleNumber CHAR(15),
 		cDNA VARCHAR(255), 
 		Comments TEXT, 
 		Genotype CHAR(4),
+		Primary Key (SampleNumber, cDNA),
 		Foreign Key(SampleNumber) References Samples(SampleNumber),
 		Foreign Key (cDNA) References Variants(cDNA)
 		)""")
