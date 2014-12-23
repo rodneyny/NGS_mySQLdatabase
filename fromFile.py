@@ -16,3 +16,9 @@ def filelist(file, lst):
 	#Append each row from the file into the genes list
 		lst.append(row)
 	return lst
+
+def openfile(file):
+	f = open(file, 'r')
+	return f.read()
+
+	
