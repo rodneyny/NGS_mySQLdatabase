@@ -68,7 +68,7 @@ try:
 	samcount = cursor.fetchall()
 
 	for line in samcount:
-		git cdna = line[0]
+		cdna = line[0]
 		count = line[1]
 		
 		cursor.execute("Update Variants set Frequency \

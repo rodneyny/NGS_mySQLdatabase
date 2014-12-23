@@ -71,7 +71,7 @@ except:
 	
 cursor.execute("select cDNA ,count(SampleNumber)as EpisodeCount \
 from Occurrence \
-group by cDNA")	g
+group by cDNA")	
 
 samcount = cursor.fetchall()
 
