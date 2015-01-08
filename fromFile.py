@@ -13,7 +13,7 @@ def filelist(file, lst):
 		
 		row = [ x.strip('"') for x in row ]
 		
-	#Append each row from the file into the genes list
+	#Append each row from the file into the given list
 		lst.append(row)
 	return lst
 
