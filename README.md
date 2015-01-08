@@ -9,7 +9,9 @@ Creating mySQL users https://www.digitalocean.com/community/tutorials/how-to-cre
 Python mySQL database access tutorial http://www.tutorialspoint.com/python/python_database_access.htm
 
 Requirements before running scripts:
+
 mySQl version 5.5.40
+
 Python version 2.7.3
 
 Contents:
@@ -21,12 +23,19 @@ Transcripts.txt - refseq transcripts with their closest ensembl equivalent and w
 VEP.py - inserts data into the database from the VEP output file. 
 
 Tables:
+
 Classes
+
 Diseases
+
 Genes
+
 Occurrence
+
 Samples
+
 Transcripts
+
 Variants
 
 Schema:
