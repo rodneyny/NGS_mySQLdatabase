@@ -1,0 +1,31 @@
+INSERT INTO Episodes ( EpisodeNumber )
+SELECT DISTINCT alamut_database_input.PatientID
+FROM alamut_database_input
+WHERE (((alamut_database_input.PatientID) Not In (select  EpisodeNumber from Episodes)));
+INSERT INTO Variant_list ( cDNA, HGVSNomen, Refseq, VariantType, Effect, Location, GenomicPosition, Protein, Exon, distNearestSS, nearestSSType, wtSSFScore, wtMaxEntScore, wtNNSScore, wtGSScore, wtHSFScore, varSSFScore, varMaxEntScore, varNNSScore, varGSScore, varHSFScore, nearestSSChange, localSpliceEffect, ProteinDomain, dbSNP, ESP, HGMD, nOrthos, conservedOrthos, conservedDistSpecies, GranthamDistance, AGVGD, SIFT )
+
+SELECT DISTINCT alamut_database_input.[# PK], alamut_database_input.HGVSnomen, alamut_database_input.transcript, alamut_database_input.varType, alamut_database_input.codingEffect, alamut_database_input.varLocation, alamut_database_input.gNomen, alamut_database_input.pNomen, alamut_database_input.exon, alamut_database_input.distNearestSS, alamut_database_input.nearestSSType, alamut_database_input.wtSSFScore, alamut_database_input.wtMaxEntScore, alamut_database_input.wtNNSScore, alamut_database_input.wtGSScore, alamut_database_input.wtHSFScore, alamut_database_input.varSSFScore, alamut_database_input.varMaxEntScore, alamut_database_input.varNNSScore, alamut_database_input.varGSScore, alamut_database_input.varHSFScore, alamut_database_input.nearestSSChange, alamut_database_input.localSpliceEffect, alamut_database_input.ProteinDomain, alamut_database_input.dbSNP, alamut_database_input.ESP, alamut_database_input.HGMD, alamut_database_input.nOrthos, alamut_database_input.conservedOrthos, alamut_database_input.conservedDistSpecies, alamut_database_input.granthamDist, alamut_database_input.AGVGD, alamut_database_input.SIFT
+FROM alamut_database_input
+WHERE (((alamut_database_input.[# PK]) Not In (select distinct cDNA from Variant_list)));
+
+INSERT INTO Occurrence ( EpisodeNumber, cDNA, Genotype )
+SELECT alamut_database_input.PatientID, alamut_database_input.[# PK], alamut_database_input.GT
+FROM alamut_database_input
+WHERE (((alamut_database_input.PatientID) Not In (select EpisodeNumber from Occurrence))) OR (((alamut_database_input.[# PK]) Not In (select cDNA from Occurrence)));
+
+UPDATE Variant_list INNER JOIN alamut_database_input ON Variant_list.cDNA = alamut_database_input.[# PK] SET Variant_list.VariantType = [alamut_database_input.varType], Variant_list.Effect = [alamut_database_input.coding.Effect], Variant_list.Location = [lamut_database_input.varLocation], Variant_list.distNearestSS = [lamut_database_input.distNearestSS], Variant_list.nearestSSType = [lamut_database_input.nearestSSType], Variant_list.wtSSFScore = [lamut_database_input.wtSSFScore], Variant_list.wtMaxEntScore = [lamut_database_input.wtMaxEntScore], Variant_list.wtNNSScore = [lamut_database_input.wtNNSScore], Variant_list.wtGSScore = [lamut_database_input.wtGSScore], Variant_list.wtHSFScore = [lamut_database_input.wtHSFScore], Variant_list.varSSFScore = [lamut_database_input.varSSFScore], Variant_list.varMaxEntScore = [lamut_database_input.varMaxEntScore], Variant_list.varNNSScore = [lamut_database_input.varNNSScore], Variant_list.varGSScore = [lamut_database_input.varGSScore], Variant_list.varHSFScore = [lamut_database_input.varHSFScore], Variant_list.nearestSSChange = [lamut_database_input.nearestSSChange], Variant_list.localSpliceEffect = [lamut_database_input.localSpliceEffect], Variant_list.ProteinDomain = [lamut_database_input.ProteinDomain], Variant_list.dbSNP = [lamut_database_input.dbSNP], Variant_list.ESP = [lamut_database_input.ESP], Variant_list.HGMD = [lamut_database_input.HGMD], Variant_list.nOrthos = [lamut_database_input.nOrthos], Variant_list.conservedOrthos = [lamut_database_input.conservedOrthos], Variant_list.conservedDistSpecies = [lamut_database_input.conservedDistSpecies], Variant_list.GranthamDistance = [lamut_database_input.granthamDist], Variant_list.AGVGD = [lamut_database_input.AGVGD], Variant_list.SIFT = [lamut_database_input.SIFT], Variant_list.DateUpdated = Date()
+WHERE (((Variant_list.VariantType) Is Null)) OR (((Variant_list.Effect) Is Null));
+
+INSERT INTO Variant_list ( cDNA, Refseq, HGVSNomen, Effect, dbSNP, ESP, Protein, SIFT, Polyphen, ProteinDomain )
+SELECT DISTINCT vep_database_input.[#PK], vep_database_input.Refseq, vep_database_input.HGVSnomen, vep_database_input.Effect, vep_database_input.dbSNP, vep_database_input.ESP, vep_database_input.Protein, vep_database_input.SIFT, vep_database_input.Polyphen, vep_database_input.ProteinDomain
+FROM vep_database_input
+WHERE (((vep_database_input.[#PK]) Not In (select distinct cDNA from Variant_list)));
+
+INSERT INTO Episodes ( EpisodeNumber )
+SELECT DISTINCT vep_database_input.SAMPLE
+FROM vep_database_input
+WHERE (((vep_database_input.SAMPLE) Not In (select  EpisodeNumber from Episodes)));
+
+INSERT INTO Occurrence ( EpisodeNumber, cDNA, Genotype )
+SELECT vep_database_input.SAMPLE, vep_database_input.[#PK], vep_database_input.GT
+FROM vep_database_input;
