@@ -1,6 +1,6 @@
 # Python mySQL database
 
-This is a repository of a database to store NGS variants that have been annotated by Variante Effect Predictor (VEP).
+This is a repository of a database to store NGS variants that have been annotated by Variant Effect Predictor (VEP).
 
 ##Tutorials
 - Tutorial for setting up mySQL on Ubuntu https://www.digitalocean.com/community/tutorials/a-basic-mysql-tutorial
