@@ -1,8 +1,5 @@
 #!/usr/bin/python
 
-import MySQLdb as dbm
-import sys 
-
 def filelist(file, lst):
 	# open a given file 
 	f = open(file, 'r')
