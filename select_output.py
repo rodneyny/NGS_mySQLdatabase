@@ -1,14 +1,13 @@
-import MySQLdb as dbm
 import csv
 import sys
 from fromFile import openfile
- 
-data = "VEPvariants" #sys.argv[1]
+from connection import connect 
+
 sql = openfile(sys.argv[1])
 
-db = dbm.connect("localhost","rodney","password",data )
-
-cursor = db.cursor()
+database = connect()
+cursor = database[0]
+db = database[1]
 
 f = open('variants2.txt','w')
 c = csv.writer(f, delimiter ='\t')

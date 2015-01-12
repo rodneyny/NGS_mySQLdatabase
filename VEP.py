@@ -1,5 +1,4 @@
-import MySQLdb as dbm
-import sys 
+from connection import connect
 from fromFile import filelist
 
 record = filelist('vep.txt','record')
@@ -7,9 +6,9 @@ record = filelist('vep.txt','record')
 # Remove the header from the dictionary
 record.remove(record[0])
 
-db = dbm.connect("localhost","rodney","password","VEPvariants" )
-
-cursor = db.cursor()
+database = connect()
+cursor = database[0]
+db = database[1]
 
 try:
 	for line in record:

@@ -1,13 +1,11 @@
 #!/usr/bin/python
 
-import MySQLdb
-import sys 
 from fromFile import filelist
-# Open database connection
-db = MySQLdb.connect("localhost","rodney","password","VEPvariants" )
+from connection import connect 
 
-# prepare a cursor object using cursor() method
-cursor = db.cursor()
+database = connect()
+cursor = database[0]
+db = database[1]
 
 # Drop table if it already exist using execute() method.
 # Order of dropping tables has to be the same order as any foreign key
