@@ -1,13 +1,15 @@
 import csv
-import sys
-from fromFile import openfile
+# from fromFile import openfile
 from connection import connect 
 
-sql = openfile(sys.argv[1])
+#sql = openfile(sys.argv[1])
+
 
 database = connect()
 cursor = database[0]
 db = database[1]
+
+sql = raw_input("Enter your query: ")
 
 f = open('variants2.txt','w')
 c = csv.writer(f, delimiter ='\t')
@@ -22,18 +24,19 @@ try:
 	results = cursor.fetchall()
 	desc = cursor.description
 
-   # Create a header based on the description values of each column
-   # Use index [0] from the description
+	# Create a header based on the description values of each column
+	# Use index [0] from the description
 	header = []
 	for line in desc:
 		header.append(line[0])
 	c.writerow(header)
 	
 	for row in results:
+		print row
 		c.writerow(row)
 	print "Finished!"
 
 except:
-   print "Error: unable to fetch data"
+	print "Error: unable to fetch data"
 
 db.close()

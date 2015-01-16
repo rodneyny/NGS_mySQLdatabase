@@ -50,7 +50,7 @@ cursor.execute(""" create table Transcripts (Refseq VARCHAR(20),
 		Foreign key (Gene) References Genes(Gene)
 		)""")
 print "Transcripts table created"		
-		  
+
 cursor.execute("""create table Variants (cDNA VARCHAR(255) NOT NULL, 
 				Refseq VARCHAR(20) NOT NULL,
 				HGVSNomen VARCHAR(255),
@@ -123,7 +123,7 @@ cursor.execute("""create table Variants (cDNA VARCHAR(255) NOT NULL,
 				Foreign key (Refseq) REFERENCES Transcripts(Refseq)
 				)""")
 print "Variants table created"
-		  
+
 cursor.execute(""" create table Samples (SampleNumber CHAR(15), 
 		Phenotype TEXT,
 		Worksheet VARCHAR(50),
