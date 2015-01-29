@@ -34,6 +34,7 @@ try:
 					%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, 
 					%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, %s,%s,%s,%s,%s,%s, 
 					%s, %s,%s,%s,%s,%s)""" , [var])
+	db.commit()
 		#print "Rows in the Variants table were populated"
 except:
 	print "an error occurred inserting variants"
