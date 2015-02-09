@@ -10,6 +10,7 @@ db = database[1]
 # Drop table if it already exist using execute() method.
 # Order of dropping tables has to be the same order as any foreign key
 # constraints starting with the 'child' table
+
 cursor.execute("DROP TABLE IF EXISTS Classes")
 cursor.execute("DROP TABLE IF EXISTS Occurrence")
 cursor.execute("DROP TABLE IF EXISTS Samples")
@@ -17,7 +18,8 @@ cursor.execute("DROP TABLE IF EXISTS Variants")
 cursor.execute("DROP TABLE IF EXISTS Transcripts")
 cursor.execute("DROP TABLE IF EXISTS Genes")
 cursor.execute("DROP TABLE IF EXISTS Diseases")
-
+cursor.execute("DROP TABLE IF EXISTS Run")
+cursor.execute("DROP TABLE IF EXISTS Sample_Run")
 # Create table as per requirement
 # When creating a new table which has a relationship with another table
 # the 'parent' table should be created before the 'child' table
@@ -126,9 +128,7 @@ print "Variants table created"
 
 cursor.execute(""" create table Samples (SampleNumber CHAR(15), 
 		Phenotype TEXT,
-		Worksheet VARCHAR(50),
-		Assay VARCHAR(255),
-		Date DATE,
+		DateAdded DATE,
 		Primary key (SampleNumber)
 		)""")
 print "Samples table created"
@@ -142,6 +142,34 @@ cursor.execute(""" create table Occurrence (SampleNumber CHAR(15),
 		Foreign Key (cDNA) References Variants(cDNA)
 		)""")
 print "Occurrence table created"
+
+cursor.execute("""create table Run ( Run_ID VARCHAR(255),
+                    Flowcell VARCHAR(255),
+                    Instrument VARCHAR(255),
+                    Date VARCHAR(255),
+                    Investigator VARCHAR(255),
+                    ProjectName VARCHAR(255),
+                    ExperimentName VARCHAR(255),
+                    Workflow VARCHAR(255),
+                    SurfaceCount INT,
+                    SwathCount INT,
+                    TileCount INT,
+                    SE_SI VARCHAR(255),
+                    SE_DI VARCHAR(255),
+                    PE_SI VARCHAR(255),
+                    PE_DI VARCHAR(255),
+                    Primary key (Run_ID)
+                    )""")
+print "Run table created"
+
+cursor.execute("""create table Sample_Run ( Run_ID VARCHAR(255),
+                            Sample VARCHAR(255),
+                            SampleName VARCHAR(255),
+                            samIndex VARCHAR(255),
+                            Description VARCHAR(255),
+                            Lane INT
+                            )""")
+print "Sample_Run table created"
 		  
 
 		
