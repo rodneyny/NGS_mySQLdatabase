@@ -154,20 +154,31 @@ cursor.execute("""create table Run ( Run_ID VARCHAR(255),
                     SurfaceCount INT,
                     SwathCount INT,
                     TileCount INT,
-                    SE_SI VARCHAR(255),
-                    SE_DI VARCHAR(255),
-                    PE_SI VARCHAR(255),
-                    PE_DI VARCHAR(255),
-                    Primary key (Run_ID)
+                    Read1 VARCHAR(255),
+                    R1qual VARCHAR(255),
+                    Read2 VARCHAR(255),
+                    R2qual VARCHAR(255),                    
+                    Index1 VARCHAR(255),
+                    I1qual VARCHAR(255),
+                    Index2 VARCHAR(255),
+                    I2qual VARCHAR(255),
+                    ClusterDensity VARCHAR(255),
+                    ClusterYield VARCHAR(255),
+                    IndexPFyield VARCHAR(255),
+                    ClusterPF VARCHAR(255),
+                    Phas_prephase VARCHAR(255),
+					Primary key (Run_ID)
                     )""")
 print "Run table created"
 
 cursor.execute("""create table Sample_Run ( Run_ID VARCHAR(255),
                             Sample VARCHAR(255),
                             SampleName VARCHAR(255),
-                            samIndex VARCHAR(255),
+                            Index1 VARCHAR(255),
+                            Index2 VARCHAR(255),
                             Description VARCHAR(255),
-                            Lane INT
+                            Lane INT,
+                            Primary key (Run_ID, SampleName)
                             )""")
 print "Sample_Run table created"
 		  
